@@ -1,0 +1,20 @@
+{
+	"name": "automated-email-generation",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "bun build --minify ./src/index.ts --outfile=./dist/script.gs",
+		"format": "bunx biome check --write",
+		"format:check": "bunx biome check",
+		"install:dev": "bun install --frozen-lockfile",
+		"install:prod": "bun install --production --frozen-lockfile"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.9",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.3"
+	}
+}

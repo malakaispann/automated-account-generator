@@ -1,0 +1,12 @@
+{
+	"editor.formatOnSave": false,
+	"emeraldwalk.runonsave": {
+		"commands": [
+			{
+				"isAsync": true,
+				"match": "\\.(ts|tsx|json)$",
+				"cmd": "bun run format"
+			}
+		]
+	}
+}
