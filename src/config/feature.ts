@@ -3,7 +3,7 @@ import { z } from "zod/v4";
 export const FeatureConfig = z.object({
 	DRY_RUN: z
 		.string()
-		.default("false")
+		.default("true")
 		.transform((val) => val.toLowerCase().trim())
 		.pipe(z.enum(["true", "false"]))
 		.transform((val) => val === "true"),
