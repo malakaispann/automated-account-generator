@@ -5,7 +5,7 @@
 			{
 				"isAsync": true,
 				"match": "\\.(ts|tsx|json)$",
-				"cmd": "bun run format"
+				"cmd": "mise run lint"
 			}
 		]
 	}
