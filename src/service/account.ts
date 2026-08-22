@@ -55,7 +55,7 @@ export class AccountService {
 		});
 
 		// Handle dry run by returning dummy
-		if (this.featureConfig.DRY_RUN) {
+		if (this.featureConfig.DRY_RUN_CREATE_ACCOUNT) {
 			this.logger.warn("Dry Run configuration enabled; Skipping real call");
 
 			const created = CreatedUser.readonly().parse({

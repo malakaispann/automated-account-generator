@@ -5,7 +5,7 @@ import { type AccountApi, AccountCreationError, AccountService } from "../accoun
 
 describe("Account Service", () => {
 	const FEATURE_CONFIG = FeatureConfig.readonly().parse({
-		DRY_RUN: "FALSE",
+		DRY_RUN_CREATE_ACCOUNT: "FALSE",
 	});
 
 	const USER = User.readonly().parse({
@@ -30,7 +30,7 @@ describe("Account Service", () => {
 
 	test("returns mock Create User when Dry Run True", () => {
 		const service = new AccountService(
-			FeatureConfig.readonly().parse({ DRY_RUN: "TRUE" }),
+			FeatureConfig.readonly().parse({ DRY_RUN_CREATE_ACCOUNT: "TRUE" }),
 			THROWING_API,
 		);
 		const createdUser = service.createUser(USER);
