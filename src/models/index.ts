@@ -1,2 +1,2 @@
 export { Entry, Response } from "./response";
-export { User } from "./user";
+export { CreatedUser, User, UserCreatePayload } from "./user";

@@ -1,3 +1,4 @@
+import Logger from "js-logger";
 import { capitalize, isEmpty } from "lodash-es";
 import type { MetaConfig, PromptConfig } from "../config";
 import { type Response, User } from "../models";
@@ -33,6 +34,8 @@ export class ExtractionService {
 		emailAddress: Entry;
 	};
 
+	private readonly logger = Logger.get("extraction");
+
 	constructor(
 		private readonly metaConfig: MetaConfig,
 		promptConfig: PromptConfig,
@@ -50,6 +53,8 @@ export class ExtractionService {
 	 * @param response response containing user information
 	 */
 	getUser(response: Response): User {
+		this.logger.info("Extracting user information from response");
+
 		// Extract and validate.
 		const firstName = this.validateAnswerIsNonBlankString(
 			response.entryMap.getOrThrow(this.expectedEntries.firstName.key, () => {
@@ -75,13 +80,18 @@ export class ExtractionService {
 		// Construct remaining information.
 		const primaryEmail = `${firstName.toLowerCase().charAt(0)}.${lastName.toLowerCase()}@${this.metaConfig.DOMAIN}`;
 
-		return User.readonly().parse({
+		const user = User.readonly().parse({
 			firstName: capitalize(firstName),
 			lastName: capitalize(lastName),
 			primaryEmail: primaryEmail,
 			backupEmail: personalEmailAddress,
 			organization: this.metaConfig.DEFAULT_ORGANIZATION,
 		});
+
+		this.logger.info("Successfully extracted information.");
+		this.logger.debug("User Info:", JSON.stringify(user, null, 2));
+
+		return user;
 	}
 
 	/**

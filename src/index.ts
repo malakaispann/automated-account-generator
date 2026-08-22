@@ -1,7 +1,8 @@
+import { password } from "bun";
 import Logger from "js-logger";
 import { extractAppConfig } from "./config";
-import { Entry, Response } from "./models";
-import { ExtractionService } from "./service";
+import { CreatedUser, Entry, Response, type UserCreatePayload } from "./models";
+import { AccountService, ExtractionService } from "./service";
 
 // Configure logging
 Logger.useDefaults({
@@ -37,6 +38,20 @@ function handleFormSubmit(context: GoogleAppsScript.Events.FormsOnFormSubmit) {
 
 	logger.debug("Creating Services");
 	const extractionService = new ExtractionService(appConfig.meta, appConfig.prompt);
+	const accountService = new AccountService(appConfig.feature, {
+		create: (payload: UserCreatePayload) => {
+			const newUser = AdminDirectory!.Users.insert(payload);
+			return CreatedUser.readonly().parse({
+				id: newUser.id,
+				firstName: newUser.name?.givenName,
+				lastName: newUser.name?.familyName,
+				primaryEmail: newUser.primaryEmail,
+				backupEmail: newUser.recoveryEmail,
+				organization: newUser.orgUnitPath,
+				password: newUser.password,
+			});
+		},
+	});
 
 	// Convert payload to domain object
 	const entries = rawResponse
@@ -48,6 +63,7 @@ function handleFormSubmit(context: GoogleAppsScript.Events.FormsOnFormSubmit) {
 	// Process
 	logger.debug("Form payload:", JSON.stringify(response, null, 2));
 	const user = extractionService.getUser(response);
+	const createdUser = accountService.createUser(user);
 }
 
 /**
