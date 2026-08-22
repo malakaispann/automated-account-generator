@@ -1,6 +1,7 @@
 export type User = {
 	firstName: string;
 	lastName: string;
-	email: string;
+	primaryEmail: string;
+	backupEmail: string;
 	organization: string;
 };
