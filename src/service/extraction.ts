@@ -34,7 +34,7 @@ export class ExtractionService {
 		emailAddress: Entry;
 	};
 
-	private readonly logger = Logger.get("extraction");
+	private readonly logger = Logger.get("extraction-service");
 
 	constructor(
 		private readonly metaConfig: MetaConfig,
