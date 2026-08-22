@@ -24,4 +24,4 @@ export function extractAppConfig(environ: Record<string, string>): AppConfig {
 	};
 }
 
-export { FeatureConfig, LoggingConfig };
+export { FeatureConfig, LoggingConfig, MetaConfig, PromptConfig };
