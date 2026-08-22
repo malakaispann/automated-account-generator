@@ -1,0 +1,25 @@
+[tools]
+bun = "1.4.0"
+
+[tasks.build]
+description = "Build standalone Javascript file"
+run = "bun run build.ts"
+[tasks.lint-check]
+description = "Check code for smells and formatting errors"
+run = "bunx --bun biome check"
+
+[tasks.lint]
+description = "Apply fixes to code."
+run = "bunx --bun biome check --write *"
+
+[tasks.setup]
+description = "Install project development dependencies"
+run = "bun install"
+
+[tasks.test-unit]
+description = "Execute unit tests only"
+run = "bun test"
+
+[tasks.test]
+description = "Run all tests"
+run = [{ task = "test-unit" }]
