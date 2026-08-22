@@ -1,1 +1,1 @@
-export { ImmutableMap, ThrowableMap } from "./map";
+export { type ImmutableMap, ThrowableMap } from "./map";
