@@ -1,6 +1,6 @@
 import { capitalize, isEmpty } from "lodash-es";
 import type { MetaConfig, PromptConfig } from "../config";
-import type { Response, User } from "../models";
+import { type Response, User } from "../models";
 import { type Answer, Entry } from "../models/response";
 
 /**
@@ -75,13 +75,13 @@ export class ExtractionService {
 		// Construct remaining information.
 		const primaryEmail = `${firstName.toLowerCase().charAt(0)}.${lastName.toLowerCase()}@${this.metaConfig.DOMAIN}`;
 
-		return {
+		return User.readonly().parse({
 			firstName: capitalize(firstName),
 			lastName: capitalize(lastName),
 			primaryEmail: primaryEmail,
 			backupEmail: personalEmailAddress,
 			organization: this.metaConfig.DEFAULT_ORGANIZATION,
-		};
+		});
 	}
 
 	/**
