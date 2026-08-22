@@ -11,3 +11,6 @@ runs:
       - name: Install tools
         shell: bash
         run: mise install 
+      - name: Install dependencies
+        shell: bash
+        run: mise run setup
