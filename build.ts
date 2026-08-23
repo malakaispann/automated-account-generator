@@ -11,7 +11,7 @@ try {
 		entryPoints: ["./src/index.ts"],
 		bundle: true,
 		minify: true,
-		format: "esm",
+		format: "iife",
 		outfile: `${OUTPUT_DIR}/${MINIFIED_FILE}`,
 		target: "es2020",
 	});
