@@ -1,21 +1,22 @@
 import Bun from "bun";
+import * as esbuild from "esbuild";
 
 const OUTPUT_DIR = "./dist";
 const MINIFIED_FILE = "minified.js";
 const FINAL_FILE = `${OUTPUT_DIR}/script.gs`;
 
 // Build main code
-const result = await Bun.build({
-	entrypoints: ["./src/index.ts"],
-	outdir: OUTPUT_DIR,
-	naming: MINIFIED_FILE,
-	minify: true,
-	format: "esm",
-	target: "browser",
-});
-
-if (!result.success) {
-	console.error("Initial bundle failed:", result.logs);
+try {
+	await esbuild.build({
+		entryPoints: ["./src/index.ts"],
+		bundle: true,
+		minify: true,
+		format: "esm",
+		outfile: `${OUTPUT_DIR}/${MINIFIED_FILE}`,
+		target: "es2020",
+	});
+} catch (error) {
+	console.error("Initial esbuild bundle failed.", error);
 	process.exit(1);
 }
 
