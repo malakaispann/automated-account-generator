@@ -74,15 +74,14 @@ The application essentially works in 4 stages:
 
 Configurations are parsed from the [script properties](https://developers.google.com/apps-script/guides/properties), Google's version of environment variables, and are used to control various aspects of the apps's behavior.
 
-Of note, the "dry run" configuration are a safety net that prevent any *real* damage from being done. These are set to `TRUE` by default to save heartache while getting setup.
+Of note, the "dry run" configuration are a safety net that prevent any *real* damage from being done. These are set to `TRUE` by default to save heartache while getting setup. Be sure to set those to `FALSE`, **only after** you're confident everything is configured correctly.
+
+The `LOGGING_LEVEL` configuration will be your best friend here. Start by setting it to "TRACE" and working your way up to "INFO".
+
 Others configs, like the organization information, are used to control the account that gets [generated for the new member](#account-creation), customize the [welcome email](#notification) sent to the new member, and control what email address gets [notified](#notification) that a new member account has been created.
 
-Overall, very important!
-
-When the `LOGGING_LEVEL` is set to "TRACE", the entire configuration will be logged for manual confirmation of expected values.
-
 > [!NOTE]
-> Configurations are parsed whenever the system registers that a form response was submitted.* This means that script properties that are added, removed, or modified will take effect on the next execution without any need to update the code itself.
+> Configurations are parsed whenever the system registers that a form response was submitted. This means that script properties can be added, removed, or modified without the need to update the code itself. Changes to properties will take effect on the next execution / response submission.
 
 ### Response Parsing
 
@@ -92,8 +91,9 @@ The app takes the information from a submitted and transforms it into basic deta
 - last name
 - personal email address
 
-To do this is searches the response for the member's first and last name as well as the member's personal email. The app is able to search for this information using the prompts (questions) in the form. Set the `_PROMPT` configuration to control this.
-    - For example, if your form asks "What is the member's first name?", set `FIRST_NAME_PROMPT` to "What is the member's first name?"
+To do this, it searches the response for the member's first and last name as well as the member's personal email. The app is able to search for this information using the prompts (questions) in the form. Set the `_PROMPT` configuration to control this.
+
+- For example, if your form asks "What is the member's first name?", set `FIRST_NAME_PROMPT` to "What is the member's first name?"
 
 Using the information from the response, it generates an email address of the form `firstInitial.lastName@organizationDomain`.
   
