@@ -30,8 +30,8 @@ export class AccountService {
 	private readonly logger = Logger.get("account-service");
 
 	constructor(
-		private readonly featureConfig: FeatureConfig,
 		private readonly api: AccountApi,
+		private readonly featureConfig: FeatureConfig,
 	) {}
 
 	/**
@@ -56,7 +56,7 @@ export class AccountService {
 
 		// Handle dry run by returning dummy
 		if (this.featureConfig.DRY_RUN_CREATE_ACCOUNT) {
-			this.logger.warn("Dry Run configuration enabled; Skipping real call");
+			this.logger.warn("Dry Run configuration enabled; Skipping real account generation logic");
 
 			const created = CreatedUser.readonly().parse({
 				...user,
@@ -81,7 +81,7 @@ export class AccountService {
 		}
 	}
 
-	private generateTemporaryPassword() {
+	private generateTemporaryPassword(): string {
 		return `tEmP!${Math.random().toString(36).substring(2, 14)}`;
 	}
 }

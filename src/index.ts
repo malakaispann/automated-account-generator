@@ -38,20 +38,23 @@ function handleFormSubmit(context: GoogleAppsScript.Events.FormsOnFormSubmit) {
 
 	logger.debug("Creating Services");
 	const extractionService = new ExtractionService(appConfig.meta, appConfig.prompt);
-	const accountService = new AccountService(appConfig.feature, {
-		create: (payload: UserCreatePayload) => {
-			const newUser = AdminDirectory!.Users.insert(payload);
-			return CreatedUser.readonly().parse({
-				id: newUser.id,
-				firstName: newUser.name?.givenName,
-				lastName: newUser.name?.familyName,
-				primaryEmail: newUser.primaryEmail,
-				backupEmail: newUser.recoveryEmail,
-				organization: newUser.orgUnitPath,
-				password: newUser.password,
-			});
+	const accountService = new AccountService(
+		{
+			create: (payload: UserCreatePayload) => {
+				const newUser = AdminDirectory!.Users.insert(payload);
+				return CreatedUser.readonly().parse({
+					id: newUser.id,
+					firstName: newUser.name?.givenName,
+					lastName: newUser.name?.familyName,
+					primaryEmail: newUser.primaryEmail,
+					backupEmail: newUser.recoveryEmail,
+					organization: newUser.orgUnitPath,
+					password: newUser.password,
+				});
+			},
 		},
-	});
+		appConfig.feature,
+	);
 
 	// Convert payload to domain object
 	const entries = rawResponse

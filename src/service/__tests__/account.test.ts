@@ -23,15 +23,15 @@ describe("Account Service", () => {
 	};
 
 	test("throws AccountCreationError when API throws", () => {
-		const service = new AccountService(FEATURE_CONFIG, THROWING_API);
+		const service = new AccountService(THROWING_API, FEATURE_CONFIG);
 
 		expect(() => service.createUser(USER)).toThrow(AccountCreationError);
 	});
 
 	test("returns mock Create User when Dry Run True", () => {
 		const service = new AccountService(
-			FeatureConfig.readonly().parse({ DRY_RUN_CREATE_ACCOUNT: "TRUE" }),
 			THROWING_API,
+			FeatureConfig.readonly().parse({ DRY_RUN_CREATE_ACCOUNT: "TRUE" }),
 		);
 		const createdUser = service.createUser(USER);
 
@@ -61,7 +61,7 @@ describe("Account Service", () => {
 			create: mockCreate,
 		};
 
-		const service = new AccountService(FEATURE_CONFIG, copyingApi);
+		const service = new AccountService(copyingApi, FEATURE_CONFIG);
 		const createdUser = service.createUser(USER);
 
 		expect(mockCreate).toHaveBeenCalledTimes(1);
