@@ -29,6 +29,14 @@ Code away!
 
 All build and development tasks are defined in `mise.toml`. Run `mise tasks` to see a full list of tasks available along with their descriptions.
 
+### Dependency Management
+
+Dependencies are managed using Bun.
+
+> [!WARNING]
+> This application will be deployed to an environment without access to common APIs provided by Node and the "Browser" such as DOM.
+> Always verify dependencies are supported in this before installing limited environment.
+
 ### Testing
 
 The project uses the Bun test runner for all testing.
