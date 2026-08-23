@@ -39,8 +39,8 @@ export class ConcreteAccountService implements AccountService {
 	private readonly logger = Logger.get("account-service");
 
 	constructor(
-		private readonly api: AccountApi,
 		private readonly featureConfig: FeatureConfig,
+		private readonly accountApi: AccountApi,
 	) {}
 
 	createUser(user: User): CreatedUser {
@@ -76,7 +76,7 @@ export class ConcreteAccountService implements AccountService {
 		}
 
 		try {
-			const created = this.api.create(createUserPayload);
+			const created = this.accountApi.create(createUserPayload);
 			this.logger.info(`Successfully created account with ID: ${created.id}`);
 			return created;
 		} catch (err) {

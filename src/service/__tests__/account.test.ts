@@ -22,6 +22,8 @@ describe("Concrete Account Service", () => {
 		create: mockCreate,
 	};
 
+	const service = new ConcreteAccountService(featureConfig, accountApi);
+
 	beforeEach(() => {
 		mock.clearAllMocks();
 	});
@@ -32,14 +34,13 @@ describe("Concrete Account Service", () => {
 				throw new Error();
 			});
 
-			const service = new ConcreteAccountService(accountApi, featureConfig);
 			expect(() => service.createUser(user)).toThrow(AccountCreationError);
 		});
 
 		test("returns cloned user details when Dry Run True", () => {
 			const service = new ConcreteAccountService(
-				accountApi,
 				FeatureConfig.readonly().parse({ DRY_RUN_CREATE_ACCOUNT: "TRUE" }),
+				accountApi,
 			);
 			const createdUser = service.createUser(user);
 
@@ -66,7 +67,6 @@ describe("Concrete Account Service", () => {
 					id: id,
 				});
 			});
-			const service = new ConcreteAccountService(accountApi, featureConfig);
 			const createdUser = service.createUser(user);
 
 			expect(mockCreate).toHaveBeenCalledTimes(1);
