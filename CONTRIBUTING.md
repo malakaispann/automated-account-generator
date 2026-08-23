@@ -49,11 +49,26 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/) to enable
 
 #### Commit Message Format
 
-```
+For normal commits:
+
+```string
 <type>: <subject>
 
 [optional body]
 ```
+
+For commits with breaking changes:
+
+```string
+<type>: <subject>
+
+[optional body]
+
+[BREAKING CHANGE: description of changed behavior]
+```
+
+You can also just use an exclamation point (!) after the type without the breaking change line to denote a breaking change
+if it's self-explanatory.
 
 #### Commit Types
 
@@ -63,7 +78,6 @@ Below are some common commit types. This isn't an exhaustive list, but it should
 - **fix**: Bug fixes for end users
 - **docs**: Documentation changes
 - **refactor**: Code restructuring
-- **perf**: Performance improvements
 - **test**: Test additions or modifications
 
 ## Code Quality
