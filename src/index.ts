@@ -9,9 +9,9 @@ import {
 } from "./models";
 import {
 	ConcreteAccountService,
+	ConcreteConversionService,
 	ConcreteEmailService,
 	ConcreteExtractionService,
-	TurndownConversionService,
 } from "./service";
 
 // Configure logging
@@ -63,7 +63,7 @@ function handleFormSubmit(context: GoogleAppsScript.Events.FormsOnFormSubmit) {
 			});
 		},
 	});
-	const conversionService = new TurndownConversionService();
+	const conversionService = new ConcreteConversionService();
 	const emailService = new ConcreteEmailService(
 		appConfig.feature,
 		appConfig.meta,

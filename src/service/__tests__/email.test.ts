@@ -26,7 +26,7 @@ describe("Email Service", () => {
 
 	const mockSend = mock();
 	const mockGetEmailLimit = mock();
-	const mockHtmlToMarkdown = mock();
+	const mockhtmlToText = mock();
 
 	const emailApi: EmailApi = {
 		send: mockSend,
@@ -34,7 +34,7 @@ describe("Email Service", () => {
 	};
 
 	const conversionService: ConversionService = {
-		htmlToMarkdown: mockHtmlToMarkdown,
+		htmlToText: mockhtmlToText,
 	};
 
 	const emailService = new ConcreteEmailService(
@@ -56,7 +56,7 @@ describe("Email Service", () => {
 
 		test("throws EmailSendError when conversion service throws", () => {
 			mockGetEmailLimit.mockReturnValue(100);
-			mockHtmlToMarkdown.mockImplementation((_: string) => {
+			mockhtmlToText.mockImplementation((_: string) => {
 				throw new Error();
 			});
 			expect(() => emailService.sendWelcomeEmail(user)).toThrow(EmailSendError);
@@ -64,7 +64,7 @@ describe("Email Service", () => {
 
 		test("throws EmailSendError when API throws during email send", () => {
 			mockGetEmailLimit.mockReturnValue(100);
-			mockHtmlToMarkdown.mockReturnValue("foo");
+			mockhtmlToText.mockReturnValue("foo");
 			mockSend.mockImplementation((_: SendEmailPayload) => {
 				throw new Error();
 			});
@@ -81,7 +81,7 @@ describe("Email Service", () => {
 			);
 
 			mockGetEmailLimit.mockReturnValue(100);
-			mockHtmlToMarkdown.mockReturnValue("foo");
+			mockhtmlToText.mockReturnValue("foo");
 
 			emailService.sendWelcomeEmail(user);
 
@@ -93,8 +93,8 @@ describe("Email Service", () => {
 			const secondMessageMd = "message 2 markdown";
 
 			mockGetEmailLimit.mockReturnValue(100);
-			mockHtmlToMarkdown.mockReturnValueOnce(firstMessageMd);
-			mockHtmlToMarkdown.mockReturnValueOnce(secondMessageMd);
+			mockhtmlToText.mockReturnValueOnce(firstMessageMd);
+			mockhtmlToText.mockReturnValueOnce(secondMessageMd);
 			mockSend.mockImplementation((_: SendEmailPayload) => {});
 
 			emailService.sendWelcomeEmail(user);

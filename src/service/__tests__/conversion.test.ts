@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import { TurndownConversionService } from "../conversion";
+import { ConcreteConversionService } from "../conversion";
 
-describe("Turndown Conversion Service", () => {
-	const service = new TurndownConversionService();
+describe("Concrete Conversion Service", () => {
+	const service = new ConcreteConversionService();
 
-	describe("HTML to Markdown", () => {
+	describe("HTML to Text", () => {
 		test.each([
 			{
 				category: "Complex layout",
@@ -17,7 +17,7 @@ describe("Turndown Conversion Service", () => {
 					<p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
 				`.trim(),
 				expected:
-					'Lorem Ipsum Dolor\n=================\n\nConsectetur adipiscing elit, sed do eiusmod tempor incididunt.\n\n> "Ut enim ad minim veniam, quis nostrud exercitation."\n\nDuis aute irure dolor in reprehenderit in voluptate velit.',
+					'Lorem Ipsum Dolor\n=================\n\nConsectetur adipiscing elit, sed do eiusmod tempor incididunt.\n"Ut enim ad minim veniam, quis nostrud exercitation." \nDuis aute irure dolor in reprehenderit in voluptate velit.\n',
 			},
 			{
 				category: "Nested Test Lists",
@@ -30,10 +30,11 @@ describe("Turndown Conversion Service", () => {
 					</ul>
 				`.trim(),
 				expected:
-					"Excepteur sint occaecat cupidatat non proident:\n\n*   Sunt in culpa qui **officia deserunt** mollit.\n*   Anim id est `laborum.method()`.\n*   Ut labore et dolore magna [aliqua](https://example.org).",
+					"Excepteur sint occaecat cupidatat non proident:\n---Sunt in culpa qui officia deserunt mollit. \n---Anim id est laborum.method(). \n---Ut labore et dolore magna [aliqua] (https://example.org) . \n",
 			},
 		])("should accurately convert $category", ({ html, expected }) => {
-			expect(service.htmlToMarkdown(html)).toBe(expected);
+			console.log(service.htmlToText(html));
+			expect(service.htmlToText(html)).toBe(expected);
 		});
 	});
 });

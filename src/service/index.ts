@@ -7,8 +7,8 @@ export {
 } from "./account";
 
 export {
+	ConcreteConversionService,
 	type ConversionService,
-	TurndownConversionService,
 } from "./conversion";
 
 export {

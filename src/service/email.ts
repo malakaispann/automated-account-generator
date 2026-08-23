@@ -105,7 +105,7 @@ export class ConcreteEmailService implements EmailService {
 
 		// Necessary for outdated or "secure" email clients that don't allow html. :)
 		try {
-			markdownBody = this.conversionService.htmlToMarkdown(htmlBody);
+			markdownBody = this.conversionService.htmlToText(htmlBody);
 		} catch (err) {
 			this.logger.error(err);
 			throw new EmailSendError("Failed to convert message to markdown (backup) format.");
