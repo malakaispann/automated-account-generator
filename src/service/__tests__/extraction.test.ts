@@ -9,7 +9,7 @@ describe("Concrete Extraction service", () => {
 	const EMAIL_ADDRESS_KEY = "bar";
 
 	const DEFAULT_ACCOUNT_SUB_ORGANIZATION = "/DEADBEEF";
-	const ORGANIZATION_DOMAIN = "baddcafe.com";
+	const ORGANIZATION_DOMAIN = "BADDCAFE.com";
 
 	const metaConfig = MetaConfig.readonly().parse({
 		DEFAULT_ACCOUNT_SUB_ORGANIZATION: DEFAULT_ACCOUNT_SUB_ORGANIZATION,
@@ -99,7 +99,7 @@ describe("Concrete Extraction service", () => {
 			const user = service.getUser(response);
 			expect(user.firstName).toBe("Jane");
 			expect(user.lastName).toBe("Doe");
-			expect(user.primaryEmail).toBe(`j.doe@${ORGANIZATION_DOMAIN}`);
+			expect(user.primaryEmail).toBe(`j.doe@baddcafe.com`);
 			expect(user.backupEmail).toBe(personalEmail);
 			expect(user.organization).toBe(DEFAULT_ACCOUNT_SUB_ORGANIZATION);
 		});
