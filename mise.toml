@@ -10,7 +10,7 @@ run = "bunx --bun biome check"
 
 [tasks.lint]
 description = "Apply fixes to code."
-run = "bunx --bun biome check --write *"
+run = "bunx --bun biome check --write"
 
 [tasks.setup]
 description = "Install project development dependencies"
