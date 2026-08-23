@@ -72,6 +72,7 @@ function handleFormSubmit(context: GoogleAppsScript.Events.FormsOnFormSubmit) {
 			send: (payload: SendEmailPayload) => {
 				MailApp.sendEmail(payload.recipient, payload.subject, payload.markdownMessage, {
 					htmlBody: payload.htmlMessage,
+					name: payload.senderName,
 				});
 			},
 		},

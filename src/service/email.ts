@@ -116,6 +116,7 @@ export class ConcreteEmailService implements EmailService {
 			subject: subject,
 			htmlMessage: htmlBody,
 			markdownMessage: markdownBody,
+			senderName: this.metaConfig.SENDER_DISPLAY_NAME,
 		});
 
 		// Handle dry run scenario

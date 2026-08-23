@@ -33,7 +33,6 @@ describe("Concrete Conversion Service", () => {
 					"Excepteur sint occaecat cupidatat non proident:\n---Sunt in culpa qui officia deserunt mollit. \n---Anim id est laborum.method(). \n---Ut labore et dolore magna [aliqua] (https://example.org) . \n",
 			},
 		])("should accurately convert $category", ({ html, expected }) => {
-			console.log(service.htmlToText(html));
 			expect(service.htmlToText(html)).toBe(expected);
 		});
 	});

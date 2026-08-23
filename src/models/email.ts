@@ -5,6 +5,7 @@ export const SendEmailPayload = z.object({
 	subject: z.string().nonempty(),
 	htmlMessage: z.string().nonempty(),
 	markdownMessage: z.string().nonempty(),
+	senderName: z.string().nonempty(),
 });
 
 export type SendEmailPayload = z.infer<typeof SendEmailPayload>;

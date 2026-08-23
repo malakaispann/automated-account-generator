@@ -11,6 +11,7 @@ describe("Email Service", () => {
 
 	const metaConfig = MetaConfig.readonly().parse({
 		ADMIN_EMAIL_ALIAS: "admin@steam.com",
+		SENDER_DISPLAY_NAME: "Steam IT",
 		ORGANIZATION_NAME: "Steam",
 	});
 
@@ -108,6 +109,7 @@ describe("Email Service", () => {
 					recipient: user.backupEmail,
 					subject: `Welcome to ${metaConfig.ORGANIZATION_NAME}`,
 					markdownMessage: firstMessageMd,
+					senderName: metaConfig.SENDER_DISPLAY_NAME,
 				}),
 			);
 
@@ -126,6 +128,7 @@ describe("Email Service", () => {
 					recipient: metaConfig.ADMIN_EMAIL_ALIAS,
 					subject: "New Account Creation for Foo Bar",
 					markdownMessage: secondMessageMd,
+					senderName: metaConfig.SENDER_DISPLAY_NAME,
 				}),
 			);
 
