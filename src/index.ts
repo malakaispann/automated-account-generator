@@ -1,7 +1,18 @@
 import Logger from "js-logger";
 import { extractAppConfig } from "./config";
-import { CreatedUser, Entry, Response, type UserCreatePayload } from "./models";
-import { ConcreteAccountService, ConcreteExtractionService } from "./service";
+import {
+	CreatedUser,
+	Entry,
+	Response,
+	type SendEmailPayload,
+	type UserCreatePayload,
+} from "./models";
+import {
+	ConcreteAccountService,
+	ConcreteEmailService,
+	ConcreteExtractionService,
+	TurndownConversionService,
+} from "./service";
 
 // Configure logging
 Logger.useDefaults({
@@ -35,8 +46,9 @@ function handleFormSubmit(context: GoogleAppsScript.Events.FormsOnFormSubmit) {
 	})(appConfig.logging.LOGGING_LEVEL);
 	Logger.setLevel(logLevel);
 
+	logger.trace("Application configuration", JSON.stringify(appConfig, null, 2));
+
 	logger.debug("Creating Services");
-	const extractionService = new ConcreteExtractionService(appConfig.meta, appConfig.prompt);
 	const accountService = new ConcreteAccountService(appConfig.feature, {
 		create: (payload: UserCreatePayload) => {
 			const newUser = AdminDirectory!.Users.insert(payload);
@@ -51,6 +63,21 @@ function handleFormSubmit(context: GoogleAppsScript.Events.FormsOnFormSubmit) {
 			});
 		},
 	});
+	const conversionService = new TurndownConversionService();
+	const emailService = new ConcreteEmailService(
+		appConfig.feature,
+		appConfig.meta,
+		{
+			getEmailLimit: () => MailApp.getRemainingDailyQuota(),
+			send: (payload: SendEmailPayload) => {
+				MailApp.sendEmail(payload.recipient, payload.subject, payload.markdownMessage, {
+					htmlBody: payload.htmlMessage,
+				});
+			},
+		},
+		conversionService,
+	);
+	const extractionService = new ConcreteExtractionService(appConfig.meta, appConfig.prompt);
 
 	// Convert payload to domain object
 	const entries = rawResponse
@@ -63,6 +90,9 @@ function handleFormSubmit(context: GoogleAppsScript.Events.FormsOnFormSubmit) {
 	logger.debug("Form payload:", JSON.stringify(response, null, 2));
 	const user = extractionService.getUser(response);
 	const createdUser = accountService.createUser(user);
+	emailService.sendWelcomeEmail(createdUser);
+
+	logger.info("Successfully processed submission.");
 }
 
 /**

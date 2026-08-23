@@ -70,7 +70,7 @@ describe("Concrete Account Service", () => {
 			const createdUser = service.createUser(user);
 
 			expect(mockCreate).toHaveBeenCalledTimes(1);
-			const mockCreatePayload = mockCreate.mock.calls[0]![0];
+			const mockCreatePayload: UserCreatePayload = mockCreate.mock.calls[0]![0];
 
 			expect(createdUser).toEqual(
 				expect.objectContaining({

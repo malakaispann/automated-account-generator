@@ -7,6 +7,19 @@ export {
 } from "./account";
 
 export {
+	type ConversionService,
+	TurndownConversionService,
+} from "./conversion";
+
+export {
+	ConcreteEmailService,
+	type EmailApi,
+	EmailError,
+	EmailSendError,
+	type EmailService,
+} from "./email";
+
+export {
 	ConcreteExtractionService,
 	EntryNotFoundError,
 	EntryValidationError,
