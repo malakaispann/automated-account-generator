@@ -18,7 +18,7 @@ import {
 Logger.useDefaults({
 	defaultLevel: Logger.INFO,
 });
-const logger = Logger.get("automated-email-generation");
+const logger = Logger.get("automated-account-generator");
 
 /**
  * Entry point for form submissions.

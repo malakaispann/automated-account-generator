@@ -1,6 +1,9 @@
 [tools]
 bun = "1.4.0"
 
+[env]
+_.file = "dev.conf"
+
 [tasks.build]
 description = "Build standalone Javascript file"
 run = "bun run build.ts"
