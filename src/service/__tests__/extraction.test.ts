@@ -8,17 +8,17 @@ describe("Concrete Extraction service", () => {
 	const LAST_NAME_KEY = "baz";
 	const EMAIL_ADDRESS_KEY = "bar";
 
-	const ORGANIZATION = "/DEADBEEF";
-	const DOMAIN = "baddcafe.com";
+	const DEFAULT_ACCOUNT_SUB_ORGANIZATION = "/DEADBEEF";
+	const ORGANIZATION_DOMAIN = "baddcafe.com";
 
 	const metaConfig = MetaConfig.readonly().parse({
-		DOMAIN: DOMAIN,
-		DEFAULT_ORGANIZATION: ORGANIZATION,
+		DEFAULT_ACCOUNT_SUB_ORGANIZATION: DEFAULT_ACCOUNT_SUB_ORGANIZATION,
+		ORGANIZATION_DOMAIN: ORGANIZATION_DOMAIN,
 	});
 	const promptConfig = PromptConfig.readonly().parse({
+		EMAIL_ADDRESS_PROMPT: EMAIL_ADDRESS_KEY,
 		FIRST_NAME_PROMPT: FIRST_NAME_KEY,
 		LAST_NAME_PROMPT: LAST_NAME_KEY,
-		EMAIL_ADDRESS_PROMPT: EMAIL_ADDRESS_KEY,
 	});
 
 	const service = new ConcreteExtractionService(metaConfig, promptConfig);
@@ -99,9 +99,9 @@ describe("Concrete Extraction service", () => {
 			const user = service.getUser(response);
 			expect(user.firstName).toBe("Jane");
 			expect(user.lastName).toBe("Doe");
-			expect(user.primaryEmail).toBe(`j.doe@${DOMAIN}`);
+			expect(user.primaryEmail).toBe(`j.doe@${ORGANIZATION_DOMAIN}`);
 			expect(user.backupEmail).toBe(personalEmail);
-			expect(user.organization).toBe(ORGANIZATION);
+			expect(user.organization).toBe(DEFAULT_ACCOUNT_SUB_ORGANIZATION);
 		});
 	});
 });

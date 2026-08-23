@@ -9,24 +9,24 @@ describe("MetaConfig", () => {
 		const companyName = "The Cheesecake Factory";
 
 		const config = MetaConfig.readonly().parse({
-			ADMIN_ALIAS: adminAlias,
-			COMPANY_NAME: companyName,
-			DEFAULT_ORGANIZATION: org,
-			DOMAIN: domain,
+			ADMIN_EMAIL_ALIAS: adminAlias,
+			ORGANIZATION_DOMAIN: domain,
+			ORGANIZATION_NAME: companyName,
+			DEFAULT_ACCOUNT_SUB_ORGANIZATION: org,
 		});
 
-		expect(config.ADMIN_ALIAS).toBe(adminAlias);
-		expect(config.COMPANY_NAME).toBe(companyName);
-		expect(config.DEFAULT_ORGANIZATION).toBe(org);
-		expect(config.DOMAIN).toBe(domain);
+		expect(config.ADMIN_EMAIL_ALIAS).toBe(adminAlias);
+		expect(config.ORGANIZATION_DOMAIN).toBe(domain);
+		expect(config.ORGANIZATION_NAME).toBe(companyName);
+		expect(config.DEFAULT_ACCOUNT_SUB_ORGANIZATION).toBe(org);
 	});
 
 	test("should set defaults when no config provided", () => {
 		const config = MetaConfig.readonly().parse({});
 
-		expect(config.ADMIN_ALIAS).toBe("admin@gmail.com");
-		expect(config.COMPANY_NAME).toBe("XYZ");
-		expect(config.DEFAULT_ORGANIZATION).toBe("/");
-		expect(config.DOMAIN).toBe("gmail.com");
+		expect(config.ADMIN_EMAIL_ALIAS).toBe("admin@gmail.com");
+		expect(config.ORGANIZATION_NAME).toBe("XYZ");
+		expect(config.ORGANIZATION_DOMAIN).toBe("gmail.com");
+		expect(config.DEFAULT_ACCOUNT_SUB_ORGANIZATION).toBe("/");
 	});
 });

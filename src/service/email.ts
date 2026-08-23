@@ -63,7 +63,7 @@ export class ConcreteEmailService implements EmailService {
 
 		this.sendEmail(
 			user.backupEmail,
-			`Welcome to ${this.metaConfig.COMPANY_NAME}`,
+			`Welcome to ${this.metaConfig.ORGANIZATION_NAME}`,
 			`
             <p>Hello and welcome ${capitalize(user.firstName)},</p>
             <p>A company account has been created for you; see the details below:</p>
@@ -77,7 +77,7 @@ export class ConcreteEmailService implements EmailService {
 
 		const fullName = `${capitalize(user.firstName)} ${capitalize(user.lastName)}`;
 		this.sendEmail(
-			this.metaConfig.ADMIN_ALIAS,
+			this.metaConfig.ADMIN_EMAIL_ALIAS,
 			`New Account Creation for ${fullName}`,
 			`
             <p>Good day,</p>

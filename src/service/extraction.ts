@@ -82,14 +82,14 @@ export class ConcreteExtractionService implements ExtractionService {
 		);
 
 		// Construct remaining information.
-		const primaryEmail = `${firstName.toLowerCase().charAt(0)}.${lastName.toLowerCase()}@${this.metaConfig.DOMAIN}`;
+		const primaryEmail = `${firstName.toLowerCase().charAt(0)}.${lastName.toLowerCase()}@${this.metaConfig.ORGANIZATION_DOMAIN}`;
 
 		const user = User.readonly().parse({
 			firstName: capitalize(firstName),
 			lastName: capitalize(lastName),
 			primaryEmail: primaryEmail,
 			backupEmail: personalEmailAddress,
-			organization: this.metaConfig.DEFAULT_ORGANIZATION,
+			organization: this.metaConfig.DEFAULT_ACCOUNT_SUB_ORGANIZATION,
 		});
 
 		this.logger.info("Successfully extracted information.");

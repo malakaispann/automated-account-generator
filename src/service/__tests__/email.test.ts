@@ -10,8 +10,8 @@ describe("Email Service", () => {
 	});
 
 	const metaConfig = MetaConfig.readonly().parse({
-		ADMIN_ALIAS: "admin@steam.com",
-		COMPANY_NAME: "Steam",
+		ADMIN_EMAIL_ALIAS: "admin@steam.com",
+		ORGANIZATION_NAME: "Steam",
 	});
 
 	const user = CreatedUser.readonly().parse({
@@ -106,7 +106,7 @@ describe("Email Service", () => {
 			expect(firstEmailPayload).toEqual(
 				expect.objectContaining({
 					recipient: user.backupEmail,
-					subject: `Welcome to ${metaConfig.COMPANY_NAME}`,
+					subject: `Welcome to ${metaConfig.ORGANIZATION_NAME}`,
 					markdownMessage: firstMessageMd,
 				}),
 			);
@@ -123,7 +123,7 @@ describe("Email Service", () => {
 
 			expect(secondEmailPayload).toEqual(
 				expect.objectContaining({
-					recipient: metaConfig.ADMIN_ALIAS,
+					recipient: metaConfig.ADMIN_EMAIL_ALIAS,
 					subject: "New Account Creation for Foo Bar",
 					markdownMessage: secondMessageMd,
 				}),
