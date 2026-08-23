@@ -1,15 +1,14 @@
-# automated-email-generation
+# Automated Email Generator
 
-To install dependencies:
+A serverless application for extracting information, creating a new user account, and notifying participants.
 
-```bash
-bun install
-```
+Created for use with [Google Apps Script](https://developers.google.com/apps-script).
 
-To run:
 
-```bash
-bun run index.ts
-```
 
-This project was created using `bun init` in bun v1.2.16. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## Configuration
+
+This app is configurable by design. Configurations are parsed from the [script properties](https://developers.google.com/apps-script/guides/properties), Google's version of environment variables,
+and control various aspects of the apps's behavior.
+
+An exhaustive list of keys and their descriptions are below:
