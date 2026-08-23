@@ -2,12 +2,14 @@ export {
 	type AccountApi,
 	AccountCreationError,
 	AccountError,
-	AccountService,
+	type AccountService,
+	ConcreteAccountService,
 } from "./account";
 
 export {
+	ConcreteExtractionService,
 	EntryNotFoundError,
 	EntryValidationError,
 	ExtractionError,
-	ExtractionService,
+	type ExtractionService,
 } from "./extraction";

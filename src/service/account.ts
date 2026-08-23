@@ -26,7 +26,16 @@ export interface AccountApi {
 /**
  * Handles account management.
  */
-export class AccountService {
+export interface AccountService {
+	/**
+	 * Creates new user
+	 * @param user details of the user
+	 * @returns newly created user account info.
+	 */
+	createUser(user: User): CreatedUser;
+}
+
+export class ConcreteAccountService implements AccountService {
 	private readonly logger = Logger.get("account-service");
 
 	constructor(
@@ -34,11 +43,6 @@ export class AccountService {
 		private readonly featureConfig: FeatureConfig,
 	) {}
 
-	/**
-	 * Creates new user
-	 * @param user details of the user
-	 * @returns newly created user account info.
-	 */
 	createUser(user: User): CreatedUser {
 		this.logger.info(`Attempting to create account for ${user.firstName} ${user.lastName}`);
 

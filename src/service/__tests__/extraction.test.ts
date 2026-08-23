@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import { MetaConfig, PromptConfig } from "../../config";
 import { Entry, Response } from "../../models";
-import { EntryNotFoundError, EntryValidationError, ExtractionService } from "../extraction";
+import { ConcreteExtractionService, EntryNotFoundError, EntryValidationError } from "../extraction";
 
-describe("Extraction service", () => {
+describe("Concrete Extraction service", () => {
 	const FIRST_NAME_KEY = "foo";
 	const LAST_NAME_KEY = "baz";
 	const EMAIL_ADDRESS_KEY = "bar";
@@ -21,7 +21,7 @@ describe("Extraction service", () => {
 		EMAIL_ADDRESS_PROMPT: EMAIL_ADDRESS_KEY,
 	});
 
-	const extractionService = new ExtractionService(metaConfig, promptConfig);
+	const service = new ConcreteExtractionService(metaConfig, promptConfig);
 
 	describe("Get User", () => {
 		test.each([
@@ -31,7 +31,7 @@ describe("Extraction service", () => {
 		])("should throw EntryNotFound error when required entry not found", (entries: Entry[]) => {
 			const response = new Response(entries);
 
-			expect(() => extractionService.getUser(response)).toThrow(EntryNotFoundError);
+			expect(() => service.getUser(response)).toThrow(EntryNotFoundError);
 		});
 
 		test.each([
@@ -58,7 +58,7 @@ describe("Extraction service", () => {
 			],
 		])("should throw EntryValidationError error when required entry blank", (entries: Entry[]) => {
 			const response = new Response(entries);
-			expect(() => extractionService.getUser(response)).toThrow(EntryValidationError);
+			expect(() => service.getUser(response)).toThrow(EntryValidationError);
 		});
 
 		test.each([
@@ -85,7 +85,7 @@ describe("Extraction service", () => {
 			],
 		])("should throw EntryValidationError error when required not string", (entries: Entry[]) => {
 			const response = new Response(entries);
-			expect(() => extractionService.getUser(response)).toThrow(EntryValidationError);
+			expect(() => service.getUser(response)).toThrow(EntryValidationError);
 		});
 
 		test("should create user with expected information", () => {
@@ -96,7 +96,7 @@ describe("Extraction service", () => {
 				new Entry(EMAIL_ADDRESS_KEY, personalEmail),
 			]);
 
-			const user = extractionService.getUser(response);
+			const user = service.getUser(response);
 			expect(user.firstName).toBe("Jane");
 			expect(user.lastName).toBe("Doe");
 			expect(user.primaryEmail).toBe(`j.doe@${DOMAIN}`);

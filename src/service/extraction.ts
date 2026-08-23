@@ -27,7 +27,16 @@ export class EntryValidationError extends ExtractionError {}
 /**
  * Handles validation and extraction of information from responses.
  */
-export class ExtractionService {
+export interface ExtractionService {
+	/**
+	 * Creates user from response
+	 *
+	 * @param response response containing user information
+	 */
+	getUser(response: Response): User;
+}
+
+export class ConcreteExtractionService implements ExtractionService {
 	private readonly expectedEntries: {
 		firstName: Entry;
 		lastName: Entry;
@@ -47,11 +56,6 @@ export class ExtractionService {
 		};
 	}
 
-	/**
-	 * Creates user from response
-	 *
-	 * @param response response containing user information
-	 */
 	getUser(response: Response): User {
 		this.logger.info("Extracting user information from response");
 

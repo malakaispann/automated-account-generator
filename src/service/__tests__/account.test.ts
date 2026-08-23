@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, mock, test } from "bun:test";
 import { FeatureConfig } from "../../config";
 import { CreatedUser, User, type UserCreatePayload } from "../../models";
-import { type AccountApi, AccountCreationError, AccountService } from "../account";
+import { type AccountApi, AccountCreationError, ConcreteAccountService } from "../account";
 
-describe("Account Service", () => {
+describe("Concrete Account Service", () => {
 	const featureConfig = FeatureConfig.readonly().parse({
 		DRY_RUN_CREATE_ACCOUNT: "FALSE",
 	});
@@ -32,12 +32,12 @@ describe("Account Service", () => {
 				throw new Error();
 			});
 
-			const service = new AccountService(accountApi, featureConfig);
+			const service = new ConcreteAccountService(accountApi, featureConfig);
 			expect(() => service.createUser(user)).toThrow(AccountCreationError);
 		});
 
 		test("returns cloned user details when Dry Run True", () => {
-			const service = new AccountService(
+			const service = new ConcreteAccountService(
 				accountApi,
 				FeatureConfig.readonly().parse({ DRY_RUN_CREATE_ACCOUNT: "TRUE" }),
 			);
@@ -66,7 +66,7 @@ describe("Account Service", () => {
 					id: id,
 				});
 			});
-			const service = new AccountService(accountApi, featureConfig);
+			const service = new ConcreteAccountService(accountApi, featureConfig);
 			const createdUser = service.createUser(user);
 
 			expect(mockCreate).toHaveBeenCalledTimes(1);
