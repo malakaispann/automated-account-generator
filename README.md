@@ -80,19 +80,22 @@ The `LOGGING_LEVEL` configuration will be your best friend here. Start by settin
 Others configs, like the organization information, are used to control the account that gets [generated for the new member](#account-creation), customize the [welcome email](#notification) sent to the new member, and control what email address gets [notified](#notification) that a new member account has been created.
 
 > [!NOTE]
-> Configurations are parsed whenever the system registers that a form response was submitted. This means that script properties can be added, removed, or modified without the need to update the code itself. Changes to properties will take effect on the next execution / response submission.
+> Configurations are parsed whenever a new response is submitted. This means that script properties can be added, removed, or modified without the need to update the code itself. Changes will take effect on the next execution / response submission.
 
 ### Response Parsing
 
-The app takes the information from a submitted and transforms it into basic details for the new member's account. The key details the app looks for are the new member's:
+The app takes the information from a response and transforms it into basic details for the new member's account. The key details the app looks for are the new member's:
 
 - first name
 - last name
 - personal email address
 
-To do this, it searches the response for the member's first and last name as well as the member's personal email. The app is able to search for this information using the prompts (questions) in the form. Set the `_PROMPT` configuration to control this.
+The app is able to search for this information in the response by using the prompts (questions) from the form. Set the appropriate `_PROMPT` configurations to control this.
 
 - For example, if your form asks "What is the member's first name?", set `FIRST_NAME_PROMPT` to "What is the member's first name?"
+
+> [!IMPORTANT]
+> Be sure to keep the prompts from your form and the configured prompts in sync. If you change your form, always do a sanity check on the app's prompt configuration.
 
 Using the information from the response, it generates an email address of the form `firstInitial.lastName@organizationDomain`.
   
@@ -103,7 +106,7 @@ Some information validation does also occur here. For example, the app checks wh
 
 > [!WARNING]
 > Always use unique prompts. The information extraction logic may extract the wrong information otherwise.
-> The app normalizes response and configured prompts to prevent issues with problematic characters. Simply removing a punctuation mark from a duplicated question is not enough.
+> The app normalizes the configured prompts as well as the ones extracted from each response to prevent issues with problematic characters. Simply removing a punctuation mark from a duplicated prompt is not enough.
 
 ### Account Creation
 
@@ -111,7 +114,7 @@ After parsing out the information for the new member's account, the app sends a 
 
 A few key details on this:
 
-- A secure-enough temporary password is created for the account. It must be changed after the first login.
+- A random-enough, 15 character temporary password is created for the account. It *must* be changed after the first login.
   - This password gets sent to the new member's personal email address during the [notification stage](#notification). Other than that, it is not captured / saved anywhere else.
 - The account is put under the sub-org specified by the `DEFAULT_ACCOUNT_SUB_ORGANIZATION` config.  See [official google docs for more on sub-orgs](https://developers.google.com/workspace/admin/directory/v1/guides/manage-org-units#manage).
 
@@ -128,15 +131,18 @@ The emails will be sent from whatever account the Google Form & Apps Script are 
 using the `SENDER_DISPLAY_NAME`.
 
 > [!IMPORTANT]
-> Google sets a limit on how many emails can be sent through the API. The app checks this limit before attempting to send any emails.
-> If at least 2 emails cannot be send because of the limit, notifications will not be sent.
+> Google sets a limit on how many emails can be sent via their APIsn. The app checks this limit before attempting to send any emails.
+> If at least 2 emails cannot be sent, the app will fail out *post-account creation*. 
 
 > [!WARNING]
 > This is the only step that exposes the temporary password generated for the member's account. If the welcome email fails to send or the wrong email address is input to the form, be aware that account admins may need to take additional measures to generate a new temporary password or lock down the account for security purposes.
 
 ## Conclusion
 
-This is a very purpose bound-application, but that doesn't mean it's complete; actually, far from it. There's always more input validation, self-recovery functionality, or QOL improvement to make.
+This is a very purpose-bound application, but that doesn't mean it's complete; actually, far from it.
+Some of the gotchas and quirky behavior listed within this README might need to be addressed in future dev cycles.
+
+In addition, there's always more input validation, self-recovery functionality, or QOL improvements to make.
 
 To request any additional features or report bugs, please use [open an issue](https://github.com/malakaispann/automated-account-generator/issues/new).
 
