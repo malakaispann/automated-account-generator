@@ -19,8 +19,7 @@ Official documentation on how to do this can be found on [Google's dev docs](htt
 This application is released as a single Javascript file. To retrieve the file:
 
 1. Navigate to your [desired release](https://github.com/malakaispann/automated-account-generator/releases)
-2. Under "Assets", click "Standalone Script (GAS-Ready)" to download
-3. Save the file to your local disk. It's just javascript. It can't execute
+2. Assets -> "Standalone Script (GAS-Ready)" to download
 
 The file contains all GAS-compatible dependencies and custom application code. All code is minimized to reduce file size.
 
@@ -30,11 +29,11 @@ The file contains all GAS-compatible dependencies and custom application code. A
 
 ### Registering the Application in Google Apps Script
 
-The is app has a mechanism to self register.
+The app has a mechanism to self register.
 
-After loading the app into GAS, whether by copy-pasting the file or just importing it, select the `runSetup` method to register the app.
+After loading the app into GAS, whether by copy-pasting the file content or importing the entire file, select the `runSetup` method to register the app.
 
-The app will now run whenever a response is submitted.
+The app will now run whenever a **response is submitted** to the form.
 
 > [!WARNING]
 > If updating application, be sure to [delete any previously registered triggers](https://developers.google.com/apps-script/guides/triggers/installable#manage_triggers_manually) for the app.
